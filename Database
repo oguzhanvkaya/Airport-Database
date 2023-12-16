@@ -1,0 +1,1013 @@
+create table CITY
+(CNAME VARCHAR(15) NOT NULL,
+STATE VARCHAR(15), 
+COUNTRY VARCHAR(30),
+constraints PK_CITY PRIMARY KEY(CNAME));
+
+declare
+v_CN CITY.CNAME%TYPE;
+v_ST CITY.STATE%TYPE;
+v_COUN CITY.COUNTRY%TYPE;
+
+TYPE CN IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 CN:=CN('Louisville','Istanbul','Fort Worth','Delhi','Mumbai','San Francisco','Frankfurt','Houston','New York City','Tampa');
+ TYPE ST IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 ST:=ST('Kentucky','Istanbul','Texas','Delhi','Maharashtra','California','Hesse','Texas','New York','Florida');
+ TYPE COUN IS VARRAY(10) OF VARCHAR(15);
+ ARRAY3 COUN:=COUN('United States','turkey','United States','India','India','United States','Germany','United States','United States','United States');
+BEGIN
+ FOR V_NUM IN 1..5 LOOP
+ v_CN:=ARRAY1(V_NUM);
+ v_ST:=ARRAY2(V_NUM);
+ v_COUN:=ARRAY3(V_NUM);
+
+ INSERT INTO CITY VALUES(v_CN,v_ST,v_COUN);
+COMMIT;
+ END LOOP;
+ END;
+
+     select * from CITY
+     
+CREATE TABLE AIRPORT
+(AP_NAME VARCHAR(100) NOT NULL,
+STATE VARCHAR(15), 
+COUNTRY VARCHAR(30),
+CNAME VARCHAR(15),
+ CONSTRAINTS PK_Per PRIMARY KEY(AP_NAME),
+ CONSTRAINTS FK_PERSON FOREIGN KEY(CNAME) REFERENCES CITY(CNAME));
+
+declare
+v_AP_N AIRPORT.AP_NAME%TYPE;
+v_STT AIRPORT.STATE%TYPE;
+v_COUNN AIRPORT.COUNTRY%TYPE;
+v_CN CITY.CNAME%TYPE;
+TYPE AP_N IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 AP_N:=AP_N('Louisville International Airport','Istanbul International Airport','Dallas/Fort Worth International Airport','Indira GandhiInternational Airport','Sabiha Gokcen International Airport','San Francisco International Airport','Frankfurt Airport','George Bush Intercontinental Airport','John F. Kennedy International Airport','Tampa International Airport');
+ TYPE STT IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 STT:=STT('Kentucky','Istanbul','Texas','Delhi','Maharashtra','California','Hesse','Texas','New York','Florida');
+ TYPE COUNN IS VARRAY(10) OF VARCHAR(15);
+ ARRAY3 COUNN:=COUNN('United States','turkey','United States','India','India','United States','Germany','United States','United States','United States');
+TYPE CN IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY4 CN:=CN('Louisville','Istanbul','Fort Worth','Delhi','Mumbai','San Francisco','Frankfurt','Houston','New York City','Tampa');
+ BEGIN
+ FOR V_N IN 1..5 LOOP
+ v_AP_N:=ARRAY1(V_N);
+ v_STT:=ARRAY2(V_N);
+ v_COUNN:=ARRAY3(V_N);
+ v_CN:=ARRAY4(V_N);
+ INSERT INTO AIRPORT VALUES(v_AP_N,v_STT,v_COUNN,v_CN);
+ COMMIT;
+ END LOOP;
+ END;
+   SELECT*FROM AIRPORT
+   
+    CREATE TABLE AIRLINE
+(AIRLINEID VARCHAR(3) NOT NULL,
+AL_NAME VARCHAR(50),
+THREE_DIGIT_CODE VARCHAR(3),
+CONSTRAINTS PK_AIRLINE PRIMARY KEY(AIRLINEID));
+
+declare
+v_AI AIRLINE.AIRLINEID%TYPE;
+v_AN AIRLINE.AL_NAME%TYPE;
+v_DI AIRLINE.THREE_DIGIT_CODE%TYPE;
+
+TYPE AI IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 AI:=AI('AA','PC','BA','KK','TK','EK','EY','QR');
+ TYPE AN IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 AN:=AN('American Airlines','Pegasus','British Airways','AtlasJet Airways','Turkish Airlines','Emirates','Ethiad Airways','Qatar Airways');
+ TYPE DI IS VARRAY(10) OF VARCHAR(15);
+ ARRAY3 DI:=DI('001','624','125','610','235','176','607','157');
+ 
+
+ BEGIN
+ FOR V_NM IN 1..5 LOOP
+ v_AI:=ARRAY1(V_NM);
+ v_AN:=ARRAY2(V_NM);
+ v_DI:=ARRAY3(V_NM);
+
+ INSERT INTO AIRLINE VALUES(v_AI,v_AN,v_DI);
+ COMMIT;
+ END LOOP;
+ END;
+SELECT*FROM AIRLINE
+
+CREATE TABLE FLIGHT
+(FLIGHT_CODE VARCHAR(10) NOT NULL,
+ SOURCE VARCHAR(3),
+DESTINATION VARCHAR(3),
+ARRIVAL VARCHAR(10),
+DEPARTURE VARCHAR(10),
+STATUS VARCHAR(10),
+DURATION VARCHAR(30),
+AIRLINEID VARCHAR(3),
+CONSTRAINTS PK_CODE PRIMARY KEY(FLIGHT_CODE),
+CONSTRAINTS FK_FLIGHT FOREIGN KEY(AIRLINEID) REFERENCES AIRLINE(AIRLINEID));
+
+declare
+v_FL FLIGHT.FLIGHT_CODE%TYPE;
+v_SC FLIGHT.SOURCE%TYPE;
+v_DES FLIGHT.DESTINATION%TYPE;
+v_AR FLIGHT.ARRIVAL%TYPE;
+v_DEP FLIGHT.DEPARTURE%TYPE;
+V_STS FLIGHT.STATUS%TYPE;
+V_DUR FLIGHT.DURATION%TYPE;
+V_AD AIRLINE.AIRLINEID%TYPE;
+
+TYPE FL IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 FL:=FL('TK2014','EK2305','EY1234','PC9876','BA4367');
+ TYPE SC IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 SC:=SC('BOM','BOM','JFK','SFO','JFK');
+ TYPE DES IS VARRAY(10) OF VARCHAR(15);
+ ARRAY3 DES:=DES('DFW','DFW','TPA','FRA','TKY');
+
+ TYPE AR IS VARRAY(10) OF VARCHAR(50);
+ ARRAY4 AR:=AR('02:10','03:15','18:10','18:55','22.50');
+ TYPE DEP IS VARRAY(10) OF VARCHAR(50);
+ ARRAY5 DEP:=DEP('02:15','02:55','03:15','18:10','17.20');
+ TYPE STS IS VARRAY(10) OF VARCHAR(50);
+ ARRAY6 STS:=STS('On-time','Delayed','On-time','Delayed','On-time');
+ TYPE DUR IS VARRAY(10) OF VARCHAR(50);
+ ARRAY7 DUR:=DUR('30hrs','21hr','29hrs','28hrs','12hrs');
+ TYPE AD IS VARRAY(10) OF VARCHAR(50);
+ ARRAY8 AD:=AD('AA','PC','BA','KK','TK','EK','EY','QR');
+ 
+
+
+ BEGIN
+ FOR V_FLI IN 1..5 LOOP
+ v_FL:=ARRAY1(V_FLI);
+v_SC:= ARRAY2(V_FLI);
+v_DES:=ARRAY3(V_FLI);
+v_AR :=ARRAY4(V_FLI);
+v_DEP:=ARRAY5(V_FLI);
+V_STS:=ARRAY6(V_FLI);
+V_DUR:=ARRAY7(V_FLI);
+V_AD:= ARRAY8(V_FLI);
+
+ INSERT INTO FLIGHT VALUES(v_FL,v_SC,v_DES,v_AR,v_DEP,V_STS,V_DUR,V_AD);
+ COMMIT;
+ END LOOP;
+ END;
+
+select*from FLIGHT
+
+CREATE TABLE AIRCRAFT
+(AIRCRAFT_ID VARCHAR(15) NOT NULL,
+AIRCRAFT_TYPE VARCHAR(20),
+AIRLINEID VARCHAR(3),
+CONSTRAINTS PK_CRAFT PRIMARY KEY(AIRCRAFT_ID),
+CONSTRAINTS FK_AIR FOREIGN KEY(AIRLINEID) REFERENCES AIRLINE(AIRLINEID));
+
+ 
+
+declare
+v_ARC AIRCRAFT.AIRCRAFT_ID%TYPE;
+v_ACT AIRCRAFT.AIRCRAFT_TYPE%TYPE;
+v_ALD AIRLINE.AIRLINEID%TYPE;
+
+TYPE ARC IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 ARC:=ARC('A6226','A350-1000','B5697','A330','A320 - 200 ');
+ TYPE ACT IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 ACT:=ACT('Airbus','Airbus','Boeing','Boeing','Boeing');
+ TYPE ALD IS VARRAY(10) OF VARCHAR(15);
+ ARRAY3 ALD:=ALD('AA','PC','BA','KK','TK','EK','EY','QR');
+
+
+ BEGIN
+ FOR V_AR IN 1..5 LOOP
+ v_ARC:=ARRAY1(V_AR);
+v_ACT:= ARRAY2(V_AR);
+v_ALD:=ARRAY3(V_AR);
+
+INSERT INTO AIRCRAFT VALUES(v_ARC,v_ACT,v_ALD);
+ COMMIT;
+ END LOOP;
+ END;
+ select*from AIRCRAFT
+
+CREATE TABLE EMPLOYEE1 (SSN INT NOT NULL,
+FNAME VARCHAR(20),
+LNAME VARCHAR(20),
+ADDRESS VARCHAR(100),
+PHONE INT,
+AGE INT,
+SEX VARCHAR(1),
+JOBTYPE VARCHAR(30),
+AP_NAME VARCHAR(100),
+CONSTRAINTS PK_EMP PRIMARY KEY(SSN),
+CONSTRAINTS FK_E FOREIGN KEY(AP_NAME) REFERENCES AIRPORT(AP_NAME) ON DELETE CASCADE);
+
+declare
+v_SN EMPLOYEE1.SSN%TYPE;
+v_EF EMPLOYEE1.FNAME%TYPE;
+v_EL EMPLOYEE1.LNAME%TYPE;
+v_ADDR EMPLOYEE1.ADDRESS%TYPE;
+v_PHN EMPLOYEE1.PHONE%TYPE;
+v_AA EMPLOYEE1.AGE%TYPE;
+v_SS EMPLOYEE1.SEX%TYPE;
+v_JTY EMPLOYEE1.JOBTYPE%TYPE;
+v_ANM AIRPORT.AP_NAME%TYPE;
+
+
+TYPE SN IS VARRAY(25)
+OF VARCHAR(250);
+ARRAY1 SN:=SN('12345','56789','98764','45698','78965');
+
+TYPE EF IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY2 EF:=EF('GIZEM','CEM','OGUZ','CEYDA','ZEYNEP');
+ TYPE EL IS VARRAY(10) OF VARCHAR(50);
+ ARRAY3 EL:=EL('ALIBEYOGLU','OZKAN','KAYA','YILMAZ','DONMEZ');
+ TYPE ADDR IS VARRAY(50) OF VARCHAR(100);
+ ARRAY4 ADDR:=ADDR('123 TOP HILL SAN Francisco,CA','45 CHERRY PARK HESSE,GERMANY','334 VITRUVIAN PARK ALBANY NY','75 BEYLIKDUZU IST','731 Fondren Houston TX');
+ TYPE PHN IS VARRAY(10) OF VARCHAR(15);
+ ARRAY5 PHN:=PHN('80892','78965','75634','89654','78526');
+ TYPE AA IS VARRAY(10) OF VARCHAR(15);
+ ARRAY6 AA:=AA('20','45','48','25','32');
+ TYPE SS IS VARRAY(10) OF VARCHAR(15);
+ ARRAY7 SS:=SS('F','M','M','F','F');
+ TYPE JTY IS VARRAY(25) OF VARCHAR(25);
+ ARRAY8 JTY:=JTY('TRAFFIC MONITOR','ENGINEER','ENGINEER','ADMINISTRATIVE SUPPORT','AIRPORT AUTHORITY');
+ TYPE ANM IS VARRAY(50) OF VARCHAR(50);
+ ARRAY9 ANM:=ANM('Louisville International Airport','Istanbul International Airport','Dallas/Fort Worth International Airport','Indira GandhiInternational Airport','Sabiha Gokcen International Airport','San Francisco International Airport','Frankfurt Airport','George Bush Intercontinental Airport','John F. Kennedy International Airport','Tampa International Airport');
+ 
+ 
+ BEGIN
+ FOR V_emp IN 1..5 LOOP
+ v_SN:=ARRAY1(V_emp);
+v_EF:=ARRAY2(V_emp);
+v_EL:=ARRAY3(V_emp);
+v_ADDR:=ARRAY4(V_emp);
+v_PHN:=ARRAY5(V_emp);
+v_AA:=ARRAY6(V_emp);
+v_SS:=ARRAY7(V_emp);
+v_JTY:=ARRAY8(V_emp);
+v_ANM:=ARRAY9(V_emp);
+
+INSERT INTO EMPLOYEE1 VALUES( v_SN,
+v_EF,
+v_EL,
+v_ADDR,
+v_PHN,
+v_AA,
+v_SS,
+v_JTY,
+v_ANM);
+ COMMIT;
+ END LOOP;
+ END;
+ select*from EMPLOYEE1
+ 
+ CREATE TABLE EMPLOYEE2
+(JOBTYPE VARCHAR(30) NOT NULL,
+SALARY INT,
+CONSTRAINTS PK_EE PRIMARY KEY(JOBTYPE));
+
+
+INSERT INTO EMPLOYEE2(JOBTYPE, SALARY)VALUES('ADMINISTRATIVE SUPPORT',50000);
+INSERT INTO EMPLOYEE2(JOBTYPE, SALARY)VALUES('ENGINEER',70000);
+INSERT INTO EMPLOYEE2(JOBTYPE, SALARY)VALUES('TRAFFIC MONITOR',80000);
+INSERT INTO EMPLOYEE2(JOBTYPE, SALARY)VALUES('AIRPORT AUTHORITY',90000);
+
+Select * from EMPLOYEE2
+
+
+CREATE TABLE PASSENGER
+(PID INT NOT NULL,
+PASSPORTNO VARCHAR(10) NOT NULL,
+FNAME VARCHAR(20),
+LNAME VARCHAR(20),
+ADDRESS VARCHAR(100),
+PHONE INT,
+AGE INT,
+SEX VARCHAR(1),
+FLIGHT_CODE VARCHAR(10),
+CONSTRAINTS PK_PASS PRIMARY KEY(PID, PASSPORTNO),
+CONSTRAINTS FK_PA FOREIGN KEY(FLIGHT_CODE) REFERENCES FLIGHT(FLIGHT_CODE) ON DELETE CASCADE);
+
+declare
+v_PD PASSENGER.PID%TYPE;
+v_PN PASSENGER.PASSPORTNO%TYPE;
+v_FN PASSENGER.FNAME%TYPE;
+v_LN PASSENGER.LNAME%TYPE;
+v_ADR PASSENGER.ADDRESS%TYPE;
+V_PHO PASSENGER.PHONE%TYPE;
+V_AG PASSENGER.AGE%TYPE;
+V_SX PASSENGER.SEX%TYPE;
+V_FC FLIGHT.FLIGHT_CODE%TYPE;
+a NUMBER :=1;
+
+TYPE PD IS VARRAY(25)OF VARCHAR(255);
+ ARRAY1 PD:=PD('1','2','3','4','5');
+ TYPE PN IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 PN:=PN('A12345','B98765','E32778','C75433','G94867');
+ TYPE FN IS VARRAY(10) OF VARCHAR(15);
+ ARRAY3 FN:=FN('ZEYNEP','BANU','John','JOHN','KEREM');
+ TYPE LN IS VARRAY(10) OF VARCHAR(50);
+ ARRAY4 LN:=LN('TUNÇ','YILMAZ','GATES','SMITH','KESER');
+ TYPE ADR IS VARRAY(10) OF VARCHAR(50);
+ ARRAY5 ADR:=ADR('2230 NORTHSIDE, APT 11, ALBANY, NY' ,'YILMAZ APT 5, TURKEY, IST' ,'1234 BAKER APTS, APT 59, GERMANY, HESSE','6666 ROCK HILL, APT 2902, TAMPA, FL','3765 Cityview Drive Philadelphia,PA');
+ TYPE PHO IS VARRAY(10) OF VARCHAR(50);
+ 
+
+ ARRAY6 PHO:=PHO('80803','80804','46245','12365','45896');
+ TYPE AG IS VARRAY(10) OF VARCHAR(50);
+ ARRAY7 AG:=AG('30','30','15','50','19');
+ TYPE SX IS VARRAY(10) OF VARCHAR(50);
+ ARRAY8 SX:=SX('F','F','M','M','M');
+ TYPE FC IS VARRAY(10) OF VARCHAR(50);
+ ARRAY9 FC:=FC('TK2014','EK2305','EY1234','PC9876','BA4367');
+
+BEGIN
+ LOOP
+ v_PD:=ARRAY1(a);
+v_PN:= ARRAY2(a);
+v_FN:=ARRAY3(a);
+v_LN :=ARRAY4(a);
+v_ADR:=ARRAY5(a);
+V_PHO:=ARRAY6(a);
+V_AG:=ARRAY7(a);
+V_SX:= ARRAY8(a);
+V_FC:= ARRAY9(a);
+
+ INSERT INTO PASSENGER VALUES(v_PD,v_PN,v_FN,v_LN,v_ADR,V_PHO,V_AG,V_SX,V_FC);
+COMMIT;
+        a := a+1;
+        EXIT WHEN a>5;
+
+     END LOOP;
+
+ END;
+select*from PASSENGER
+ 
+ CREATE TABLE TICKET1
+(TICKET_NUMBER INT NOT NULL,
+SOURCE VARCHAR(3),
+DESTINATION VARCHAR(3),
+DATE_OF_BOOKING DATE,
+DATE_OF_TRAVEL DATE,
+SEATNO VARCHAR(5),
+CLASS VARCHAR(15),
+DATE_OF_CANCELLATION DATE,
+PID INT,
+PASSPORTNO VARCHAR(10),
+CONSTRAINTS PK_TICKET1 PRIMARY KEY(TICKET_NUMBER),
+
+CONSTRAINTS FK_TIC FOREIGN KEY(PID, PASSPORTNO) REFERENCES PASSENGER(PID, PASSPORTNO) ON DELETE CASCADE);
+
+
+declare
+v_tc TICKET1.TICKET_NUMBER%TYPE;
+v_sr TICKET1.SOURCE%TYPE;
+v_dcs TICKET1.DESTINATION%TYPE;
+v_dtb TICKET1.DATE_OF_BOOKING%TYPE;
+v_dft TICKET1.DATE_OF_TRAVEL%TYPE;
+V_st TICKET1.SEATNO%TYPE;
+V_cl TICKET1.CLASS%TYPE;
+V_dtc TICKET1.DATE_OF_CANCELLATION%TYPE;
+V_pp PASSENGER.PID%TYPE;
+V_ppn PASSENGER.PASSPORTNO%TYPE;
+b NUMBER :=1;
+
+TYPE tc IS VARRAY(25)OF VARCHAR(255);
+ ARRAY1 tc:=tc(25112,19845,59864,48963,78963);
+ TYPE sr IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 sr:=sr('BOM','BOM','JFK','FRA','THY');
+ TYPE dcs IS VARRAY(10) OF VARCHAR(15);
+ ARRAY3 dcs:=dcs('DEL','JFK','BOM','DFW','BOM');
+ TYPE dtb IS VARRAY(20) OF VARCHAR(50);
+ ARRAY4 dtb:=dtb('15-01-21','31-12-21','11-06-21','11-05-20','12-06-2021');
+ TYPE dft IS VARRAY(20) OF VARCHAR(50);
+ ARRAY5 dft:=dft('19-01-20','18-06-21','31-12-20','11-06-21','31-12-21');
+ TYPE st IS VARRAY(10) OF VARCHAR(50);
+ ARRAY6 st:=st('14F','17A','1A','9C','23B');
+ TYPE cl IS VARRAY(10) OF VARCHAR(50);
+ ARRAY7 cl:=cl('ECONOMY','ECONOMY','ECONOMY','ECONOMY','BUSINESS');
+ TYPE dtc IS VARRAY(20) OF VARCHAR(50);
+ ARRAY8 dtc:=dtc('20-12-21','12-01-19','11-06-21','14-05-2020 ','18-02-2020');
+ TYPE pp IS VARRAY(10) OF VARCHAR(50);
+ ARRAY9 pp:=pp('1','2','3','4','5');
+ TYPE ppn IS VARRAY(10) OF VARCHAR(50);
+ ARRAY10 ppn:=ppn('A12345','B98765','E32778','C75433','G94867');
+ 
+ BEGIN
+ LOOP
+ v_tc:=ARRAY1(b);
+v_sr:= ARRAY2(b);
+v_dcs:=ARRAY3(b);
+v_dtb :=ARRAY4(b);
+v_dft:=ARRAY5(b);
+V_st:=ARRAY6(b);
+V_cl:=ARRAY7(b);
+V_dtc:= ARRAY8(b);
+V_pp:=ARRAY9(b);
+V_ppn:=ARRAY10(b);
+
+ 
+ INSERT INTO TICKET1 VALUES(v_tc,v_sr,v_dcs,v_dtb,v_dft,V_st,V_cl,V_dtc,V_pp,V_ppn);
+COMMIT;
+        b := b+1;
+        EXIT WHEN b>5;
+
+     END LOOP;
+
+ END;
+ 
+SELECT*FROM TICKET1
+
+CREATE TABLE TICKET2
+(DATE_OF_BOOKING DATE NOT NULL,
+SOURCE VARCHAR(3) NOT NULL,
+DESTINATION VARCHAR(3) NOT NULL,
+CLASS VARCHAR(15) NOT NULL,
+PRICE INT,
+CONSTRAINTS PK_TICKET2 PRIMARY KEY(DATE_OF_BOOKING, SOURCE, DESTINATION, CLASS));
+
+declare
+v_bb TICKET2.DATE_OF_BOOKING%TYPE;
+v_src TICKET2.SOURCE%TYPE;
+v_dest TICKET2.DESTINATION%TYPE;
+v_cls TICKET2.CLASS%TYPE;
+v_prc TICKET2.PRICE%TYPE;
+c number:=1;
+
+TYPE bb IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 bb:=bb('15-01-21','31-12-21','11-06-21','11-05-20','12-06-2021');
+ TYPE src IS VARRAY(10) OF VARCHAR(50);
+ ARRAY2 src:=src('BOM','BOM','JFK','FRA','THY');
+ TYPE dest IS VARRAY(50) OF VARCHAR(100);
+ ARRAY3 dest:=dest('DEL','JFK','BOM','DFW','BOM');
+ TYPE cls IS VARRAY(120) OF VARCHAR(20);
+ ARRAY4 cls:=cls('ECONOMY','ECONOMY','ECONOMY','ECONOMY','BUSINESS');
+  TYPE prc IS VARRAY(10) OF VARCHAR(15);
+ ARRAY5 prc:=prc('200','250','367','458','150');
+ 
+ BEGIN
+WHILE c<5 LOOP
+ v_bb:=ARRAY1(c); 
+v_src:=ARRAY2(c);
+v_dest:=ARRAY3(c);
+v_cls:=ARRAY4(c);
+v_prc:=ARRAY5(c);
+ 
+INSERT INTO TICKET2 VALUES(v_bb,
+v_src,
+v_dest,
+v_cls,
+v_prc);
+COMMIT;
+        c := c+1;
+     
+
+     END LOOP;
+
+ END;
+ 
+ select*from TICKET2
+ 
+  CREATE TABLE TICKET3
+(DATE_OF_CANCELLATION DATE NOT NULL,
+SURCHARGE INT,
+CONSTRAINTS PK_TICK PRIMARY KEY(DATE_OF_CANCELLATION));
+
+declare
+v_datec TICKET3.DATE_OF_CANCELLATION%TYPE;
+v_surch TICKET3.SURCHARGE%TYPE;
+f number:=1;
+TYPE datec IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 datec:=datec('20-12-21','25-01-21','11-06-21','14-05-2020 ','18-02-2020');
+ TYPE surch IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY2 surch:=surch('100','200','257','474','150');
+
+BEGIN
+WHILE f<6 LOOP
+v_datec:=ARRAY1(f);
+v_surch:=ARRAY2(f);
+INSERT INTO TICKET3 VALUES(v_datec,v_surch);
+
+COMMIT;
+        f := f+1;
+     
+
+     END LOOP;
+
+ END;
+ 
+ select*from TICKET3
+ 
+ 
+  CREATE TABLE BAGGAGE
+(BAGID VARCHAR(5) NOT NULL,
+BAG_TYPE VARCHAR(10),
+TICKET_NUMBER INT,
+CONSTRAINTS PK_BAG PRIMARY KEY(BAGID),
+CONSTRAINTS FK_BAG FOREIGN KEY(TICKET_NUMBER) REFERENCES TICKET1(TICKET_NUMBER) ON DELETE CASCADE);
+
+declare
+v_bag BAGGAGE.BAGID%TYPE;
+v_bt BAGGAGE.BAG_TYPE%TYPE;
+v_tn  TICKET1.TICKET_NUMBER%TYPE;
+d number:=1;
+TYPE bag IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY1 bag:=bag('A1256','B5896','C4589','D1567','F7896');
+ TYPE bt IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY2 bt:=bt('Small','LARGE','Small','MEDIUM','LARGE');
+TYPE tn  IS VARRAY(25)
+OF VARCHAR(255);
+ARRAY3 tn:=tn(25112,19845,59864,48963,78963);
+
+BEGIN
+WHILE d<6 LOOP
+v_bag:=ARRAY1(d);
+v_bt:=ARRAY2(d);
+v_tn:=ARRAY3(d);
+INSERT INTO BAGGAGE VALUES(v_bag,v_bt,v_tn);
+
+COMMIT;
+         d:= d+1;
+     
+
+     END LOOP;
+
+ END;
+
+select*from BAGGAGE
+-----------
+
+----EYALETLERE GÖRE HAVALİMANI
+CREATE OR REPLACE PROCEDURE SelectAirporttt 
+AS
+cursor airportdetail is
+select c.CNAME, a.AP_NAME from city c, airport a 
+where c.CNAME=a.CNAME;
+
+airp airportdetail%rowtype;
+BEGIN
+ 
+Open airportdetail ;
+   LOOP
+    fetch airportdetail into airp;
+     EXIT WHEN airportdetail%NOTFOUND;
+   dbms_output.put_line (airp.CNAME || '  ' || airp.AP_NAME);
+   
+    END LOOP;
+     close airportdetail;
+ END  SelectAirporttt;
+ set serveroutput on;
+ 
+ exec SelectAirporttt
+ 
+---------------------------------------------
+
+-----UCUS DURUMUNA GÖRE HAVAYOLUNU, SAATI, KONUM...
+CREATE PROCEDURE FLIGHTBYSTATUS
+(
+  IN_STATUS IN VARCHAR2
+) AS 
+ 
+CURSOR fSTATUS is
+select  distinct f.FLIGHT_CODE ,al.AL_NAME ,f.ARRIVAL,f.DEPARTURE,f.SOURCE,f.DESTINATION,f.STATUS from Airline al ,Airport ap,flight f
+where al.AIRLINEID=f.AIRLINEID
+and  f.STATUS =IN_STATUS;
+FlightStatus fSTATUS%rowtype;
+  
+BEGIN
+  Open fSTATUS ;
+   LOOP
+    fetch fSTATUS into FlightStatus;
+     EXIT WHEN fSTATUS%NOTFOUND;
+   dbms_output.put_line (FlightStatus.FLIGHT_CODE || '  ' || FlightStatus.AL_NAME || '  ' || FlightStatus.ARRIVAL || '  ' || FlightStatus.DEPARTURE|| '  ' ||FlightStatus.SOURCE || '  ' || FlightStatus.DESTINATION || '  ' || FlightStatus.STATUS);
+   END LOOP;
+     close fSTATUS;
+END FLIGHTBYSTATUS;
+exec FLIGHTBYSTATUS('Delayed');
+exec FLIGHTBYSTATUS('On-time');
+
+
+---------------------------------
+
+----DESTINATIONU DFW VE CLASSI ECONOMY OLAN PASSENGER BİLGİSİ
+CREATE or REPLACE PROCEDURE passengerdetail AS 
+CURSOR passdetail is
+select al.AL_NAME,fl.FLIGHT_CODE,p1.FNAME,p1.LNAME,p1.PASSPORTNO,t.CLASS,t.DATE_OF_TRAVEL,t.DESTINATION,t.SOURCE,t.SEATNO,t.TICKET_NUMBER from Airline al,Flight fl,PASSENGER p1,TICKET1 t
+where al.AIRLINEID = fl.AIRLINEID
+
+and fl.FLIGHT_CODE = p1.FLIGHT_CODE
+and t.PASSPORTNO = p1.PASSPORTNO
+and t.CLASS='ECONOMY' and t.DESTINATION='DFW';
+passengereco passdetail%rowtype;
+ 
+BEGIN
+ 
+Open passdetail ;
+   LOOP
+    fetch passdetail into passengereco;
+     EXIT WHEN passdetail%NOTFOUND;
+   dbms_output.put_line (passengereco.AL_NAME || '  ' || passengereco.FLIGHT_CODE || '  ' || passengereco.FNAME || '  ' || passengereco.LNAME|| '  ' ||passengereco.PASSPORTNO || '  ' || passengereco.CLASS || '  ' || passengereco.SOURCE || '  ' || passengereco.SEATNO || '  ' || passengereco.TICKET_NUMBER);
+   
+    END LOOP;
+     close passdetail;
+ END passengerdetail;
+ exec passengerdetail();
+-----------
+
+----AIRLINE ID VE AIRLINE NAME ESLESMESINI BASTIR
+CREATE OR REPLACE PROCEDURE AIRLINEINFO AS
+    CURSOR airInfo IS 
+      SELECT AIRLINEID, 
+             THREE_DIGIT_CODE,
+             AL_NAME
+             
+      FROM   AIRLINE; 
+    air_info airInfo%ROWTYPE; 
+BEGIN 
+    OPEN airInfo; 
+
+    LOOP 
+        FETCH airInfo INTO air_info; 
+
+        EXIT WHEN airInfo%NOTFOUND; 
+
+        dbms_output.Put_line('AIRLINE Information:: ' 
+                             ||'  ID: ' 
+                             ||air_info.AIRLINEID
+                             ||'  Name: ' 
+                             ||air_info.AL_NAME
+                             ); 
+    END LOOP; 
+dbms_output.Put_line('Total number of rows : ' 
+                         ||airInfo%rowcount); 
+CLOSE airInfo; 
+END AIRLINEINFO;
+EXEC AIRLINEINFO
+-------------------------------------
+
+-----CLASS VE PRICE 
+ CREATE OR REPLACE PROCEDURE tickeet1
+AS
+
+  CURSOR c_ticket
+  IS
+    SELECT 
+        CLASS, PRICE
+    FROM 
+       TICKET2
+    ORDER BY 
+        PRICE DESC;
+       ticket c_ticket%rowtype;
+BEGIN
+
+  FOR ticket IN c_ticket
+  LOOP
+    dbms_output.put_line( ticket.CLASS || ': $' ||  ticket.PRICE );
+  END LOOP;
+  
+ END  tickeet1;
+
+exec tickeet1
+---------------------------------
+
+----BAGTYPE SMALL OLAN ID
+CREATE PROCEDURE baggagedetail AS 
+   CURSOR bag
+   IS
+      SELECT *
+        FROM BAGGAGE
+       WHERE BAG_TYPE = 'Small';
+BEGIN
+   FOR baggage1
+   IN bag
+   LOOP
+      DBMS_OUTPUT.put_line (
+         baggage1.BAGID);
+   END LOOP;
+
+ END baggagedetail;
+ exec baggagedetail
+--------------------------------------------
+
+CREATE OR REPLACE PROCEDURE SURCHARGEE AS
+CURSOR decr IS
+    SELECT * FROM TICKET3
+    WHERE DATE_OF_CANCELLATION BETWEEN '14-05-20' AND '11-06-21';
+    
+BEGIN 
+    dbms_output.put_line('BETWEEN 14-05-20 AND 11-06-21 SURCHARGE WILL DECREASE ');
+    FOR b IN decr
+        LOOP
+            
+            dbms_output.put_line('Before: ' || b.SURCHARGE|| '  After: ' || b.SURCHARGE/(1.1));
+        END LOOP;
+      
+    END SURCHARGEE;
+
+EXEC SURCHARGEE
+
+-----
+CREATE OR REPLACE PROCEDURE EMP AS 
+CURSOR B is
+ SELECT * FROM EMPLOYEE1 INNER JOIN EMPLOYEE2 ON EMPLOYEE1.JOBTYPE = EMPLOYEE2.JOBTYPE;
+ 
+ BEGIN
+   FOR empINFO
+   IN b
+   LOOP
+      DBMS_OUTPUT.put_line (
+         empINFO.SSN||'  '|| empINFO.FNAME||'   '|| empINFO.LNAME||'   '|| empINFO.SALARY);
+   END LOOP;
+    END EMP;
+exec EMP
+
+----------------------------QUERYY------------------
+
+--COUNT QUERY-- 
+ 
+  SELECT 
+       CASE WHEN AGE < 21 THEN 'young'
+      WHEN AGE < 46 THEN 'Average'
+      WHEN AGE  < 70 THEN 'Old'
+            ELSE 'Old' END AS condition,
+      COUNT(1) AS count
+  FROM EMPLOYEE1
+  GROUP BY CASE WHEN AGE  < 21 THEN 'young'
+      WHEN AGE  < 46 THEN 'Average'
+      WHEN AGE  < 70 THEN 'Old'
+            ELSE 'Old' END
+
+
+--------------------------------
+
+BEGIN
+    FOR t_SURCHARGE IN (
+           
+           SELECT
+              DATE_OF_CANCELLATION, SURCHARGE
+              
+            FROM 
+              TICKET3
+            
+            ORDER BY SURCHARGE DESC
+     )
+    LOOP
+      dbms_output.put_line( t_SURCHARGE.DATE_OF_CANCELLATION ||
+      ': $' ||
+      t_SURCHARGE.SURCHARGE );
+    END LOOP;
+END;
+
+
+--QUERY3--
+ BEGIN  FOR EMPLOYEE1 IN(SELECT JOBTYPE,SSN 
+ FROM EMPLOYEE1
+ WHERE JOBTYPE= 'ENGINEER' AND SSN='56789') LOOP DBMS_OUTPUT.PUT_LINE('JOB TYPE:'||EMPLOYEE1.JOBTYPE||CHR(9)
+ || 'SSN:'||EMPLOYEE1.SSN);
+ END LOOP;
+ END;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ -----------TRIGGERS------
+ ---AGE RANGE---- 
+ ----YAS SINIRI 18-55 ARASINDA 
+ CREATE OR REPLACE TRIGGER age_check
+    BEFORE INSERT OR UPDATE OF AGE ON EMPLOYEE1
+    FOR EACH ROW
+
+
+DECLARE
+    min_age NUMBER:=18;
+    max_age NUMBER:=55;
+ 
+
+
+    AGE_out_of_range EXCEPTION;
+
+BEGIN
+    
+IF(:NEW.AGE< min_age OR :NEW.AGE>max_age) THEN
+
+        RAISE AGE_out_of_range;
+    END IF;
+EXCEPTION
+    WHEN AGE_out_of_range THEN
+        Raise_application_error (
+
+            -20300,
+            'AGE: '  || :NEW.AGE ||  ' out of range!');
+
+    WHEN NO_DATA_FOUND THEN
+        Raise_application_error(-20322,'Invalid Employee Insertion!');
+END;
+
+
+update employee1 set age =  32 where ssn = 12345;
+
+drop trigger age_check
+
+SELECT* FROM EMPLOYEE1
+
+
+
+---Trigger when flight status changed it is logged into different table
+
+ CREATE TABLE "STATUS_FLIGHTS" 
+   (           "FLIGHT_CODE" VARCHAR2(20 BYTE), 
+                "DESTINATION" VARCHAR2(20 BYTE), 
+                "SOURCE" VARCHAR2(20 BYTE), 
+                "AIRLINEID" VARCHAR2(20 BYTE), 
+                "REPORT_TIME" DATE
+   );
+   
+   
+CREATE OR REPLACE TRIGGER STATUSFLIGHTS
+AFTER INSERT ON FLIGHT
+FOR EACH ROW 
+
+
+BEGIN
+
+  insert into STATUS_FLIGHTS(FLIGHT_CODE, SOURCE, DESTINATION , AIRLINEID ,report_time) values(:new.flight_code,:new.source,:new.destination,:new.airlineid,sysdate);
+
+ 
+END;
+
+
+INSERT INTO FLIGHT(FLIGHT_CODE, SOURCE, DESTINATION, ARRIVAL, DEPARTURE, STATUS, DURATION, AIRLINEID)
+VALUES('TK2018','BOM','DFW','02:18','02:57','Delayed','29hrs','TK');
+
+select*from STATUS_FLIGHTS
+
+
+
+-------------------------------------------
+
+----BILET FIYATI GUNCELLEME
+
+CREATE TABLE TICKET_PRICE_HISTORY
+(DATE_OF_BOOKING DATE NOT NULL,
+SOURCE VARCHAR(3) NOT NULL,
+DESTINATION VARCHAR(3) NOT NULL,
+CLASS VARCHAR2(15) NOT NULL,
+PRICE INT,
+PRIMARY KEY(DATE_OF_BOOKING, SOURCE, DESTINATION, CLASS));
+
+CREATE OR REPLACE TRIGGER TICKET_PRICE_HISTORY
+BEFORE UPDATE OF PRICE
+ON TICKET2
+FOR EACH ROW
+
+BEGIN
+INSERT INTO TICKET_PRICE_HISTORY 
+VALUES(:OLD.DATE_OF_BOOKING, :OLD.SOURCE, :OLD.DESTINATION, :OLD.CLASS, :OLD.PRICE);
+
+END;
+
+UPDATE TICKET2
+SET PRICE=190
+WHERE DATE_OF_BOOKING ='15-01-21'
+AND SOURCE='BOM'
+AND DESTINATION='JFK'
+AND CLASS='ECONOMY'
+
+SELECT *FROM TICKET2
+
+
+drop trigger TICKET_PRICE_HISTORY
+--------------------------------------
+
+----MAAS GUNCELLEME
+
+
+create TABLE Emp_sal (
+  job_type   varchar(20),
+ 
+  New_salary INT);
+ 
+
+
+CREATE OR REPLACE TRIGGER log_salary_increase
+  AFTER UPDATE OF SALARY ON EMPLOYEE2
+  FOR EACH ROW
+BEGIN
+  INSERT INTO Emp_sal (job_type, New_salary)
+  VALUES (:NEW.JOBTYPE, :NEW.SALARY);
+END;
+
+UPDATE EMPLOYEE2
+SET SALARY = SALARY + 10000
+WHERE JOBTYPE = 'TRAFFIC MONITOR';
+
+SELECT * FROM EMPLOYEE2
+
+ 
+ drop trigger log_salary_increase
+ 
+ 
+ 
+ ----UPDATE SURCHARGE FROM TICKET3
+
+CREATE OR REPLACE TRIGGER before_update_salesInfo  
+BEFORE UPDATE  
+ON TICKET3 FOR EACH ROW  
+
+BEGIN  
+ DBMS_OUTPUT.PUT_LINE('Old value of SURCHARGE : '||:OLD.SURCHARGE);
+  DBMS_OUTPUT.PUT_LINE('Proposed new value of SURCHARGE: '||:NEW.SURCHARGE);
+ DBMS_OUTPUT.PUT_LINE('Final value '||:NEW.SURCHARGE);
+END;
+drop trigger before_update_salesInfo  
+
+SET SERVEROUTPUT ON;
+UPDATE TICKET3 SET SURCHARGE=600 WHERE DATE_OF_CANCELLATION='25-01-21';
+
+SELECT*FROM TICKET3
+
+
+
+
+----delete passenger with phone number
+
+CREATE TABLE passinfo (  
+    PID INT ,  
+    PHONE INT,  
+   deleted_time DATE);  
+
+CREATE OR REPLACE TRIGGER before_delete_pass  
+BEFORE DELETE 
+ON PASSENGER
+FOR EACH ROW  
+BEGIN  
+    INSERT INTO passinfo (PID,PHONE,deleted_time)  
+    VALUES(:OLD.PID,:OLD.PHONE,sysdate);  
+END;
+
+DELETE FROM PASSENGER WHERE PHONE = 80803;
+
+SELECT*FROM passinfo
+
+drop trigger before_delete_pass  
+
+
+
+
+
+------------------
+
+CREATE OR REPLACE VIEW tic_info AS SELECT
+T.TICKET_NUMBER,
+T.DATE_OF_TRAVEL,
+T.SEATNO,
+T.CLASS,
+P.PID
+FROM  PASSENGER P, TICKET1 T where P.PID=T.PID
+
+   CREATE OR REPLACE TRIGGER tic_info_insert
+   INSTEAD OF INSERT ON tic_info
+   DECLARE
+     duplicate_info EXCEPTION;
+     PRAGMA EXCEPTION_INIT (duplicate_info, -00001);
+   BEGIN
+     INSERT INTO tic_info
+       (TICKET_NUMBER,DATE_OF_TRAVEL,SEATNO,CLASS,PID)
+     VALUES (
+     :new.TICKET_NUMBER,
+     :NEW.DATE_OF_TRAVEL,
+     :NEW.SEATNO,
+     :NEW.CLASS,
+     :NEW.PID);
+ EXCEPTION
+     WHEN duplicate_info THEN
+       RAISE_APPLICATION_ERROR (
+         num=> -24107,
+         msg=> 'Duplicate ticket number id');
+   END tic_info_insert;
+
+
+ 
+   INSERT INTO TICKET1(TICKET_NUMBER, SOURCE, DESTINATION, DATE_OF_BOOKING, DATE_OF_CANCELLATION, DATE_OF_TRAVEL, SEATNO, CLASS, PID, PASSPORTNO)
+VALUES(24551,'BOM','DFW','11-05-21','','15-12-21','28A','ECONOMY',1,'A12345');
+   SELECTFROM TICKET1
+   SELECTFROM tic_info
+   INSERT INTO tic_info values(24551,'15-12-21','28A','ECONOMY',1);
