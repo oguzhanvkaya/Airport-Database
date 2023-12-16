@@ -1,0 +1,1 @@
+This is a project in which I created the interconnected data of all components required by an airport. Airports, Airplanes, Airport Ground Services employees and passengers. In this project, all primary and foreign keys are shown with their connections.
